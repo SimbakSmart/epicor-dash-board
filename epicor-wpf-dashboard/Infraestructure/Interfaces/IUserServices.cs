@@ -8,5 +8,6 @@ namespace Infraestructure.Interfaces
     public  interface IUserServices
     {
         List<UsersReports> TotalOpenReportsByUsers();
+        List<UsersReports> TotalOpenReportsByUsersAndRange();
     }
 }

@@ -3,10 +3,66 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Epicor"
+         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+         xmlns:vms="clr-namespace:Epicor.ViewModels"
+         xmlns:local="clr-namespace:Epicor"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+    <Window.DataContext>
+        <vms:UserReportViewModel />
+    </Window.DataContext>
     <Grid>
-        <DataGrid x:Name="dgData" />
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="56"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <Label 
+            Grid.Row="0"
+            Content="ANÁLISIS DE  REPORTES ACTIVOS" 
+            FontSize="24"
+            FontWeight="Bold"
+             HorizontalAlignment="Center"
+            />
+
+        <materialDesign:Card Grid.Row="1" Padding="5" Margin="16" >
+            <DockPanel>
+                <Label Content="REPORTES USUARIOS" HorizontalAlignment="Center" />
+                <lvc:CartesianChart 
+                Series="{Binding Series}"
+                XAxes="{Binding XAxes}"
+                />
+            </DockPanel>
+        </materialDesign:Card>
+
+
+        <materialDesign:Card Grid.Row="2" Padding="15" Margin="5" Width="800">
+            <DataGrid Grid.Row="2" HorizontalAlignment="Center"
+                Margin="5 0 "
+                ItemsSource="{Binding ListRange}" 
+                AutoGenerateColumns="False"
+                CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Usuario" Binding="{Binding UserName}" />
+                    <DataGridTextColumn Header="0-2 días" Binding="{Binding FirstMeasure}" />
+                    <DataGridTextColumn Header="3-7 días" Binding="{Binding SecondMeasure}" />
+                    <DataGridTextColumn Header="8-15 días" Binding="{Binding ThirdMeasure}" />
+                    <DataGridTextColumn Header="16-21 días" Binding="{Binding FourthMeasure}" />
+                    <DataGridTextColumn Header=">21 días" Binding="{Binding FiveMeasure}" />
+                    <DataGridTextColumn Header="Total" Binding="{Binding Total}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </materialDesign:Card>
+
+
     </Grid>
 </Window>
